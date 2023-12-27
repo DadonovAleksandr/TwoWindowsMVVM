@@ -37,6 +37,8 @@ namespace TwoWindowsMVVM
             base.OnStartup(e);
 
             await host.StartAsync().ConfigureAwait(false);
+
+            Service.GetRequiredService<MainWindow>().Show();
         }
 
         protected override async void OnExit(ExitEventArgs e)

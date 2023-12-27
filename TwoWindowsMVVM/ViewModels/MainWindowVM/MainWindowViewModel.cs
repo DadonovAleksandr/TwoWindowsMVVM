@@ -49,24 +49,24 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 
         #region Exit
         public ICommand Exit { get; }
-        private void OnExitExecuted(object p) => Application.Current.Shutdown();
+        private void OnExitExecuted(object p) { }
         private bool CanExitExecute(object p) => true;
         #endregion
 
         #region SendMessage
         public ICommand SendMessage { get; }
-        private void OnSendMessageExecuted(object p) => Application.Current.Shutdown();
+        private void OnSendMessageExecuted(object p) { }
         #endregion
 
         #region  OpenSecondWindow
         public ICommand OpenSecondWindow { get; }
-        private void OnOpenSecondWindowExecuted(object p) => Application.Current.Shutdown();
+        private void OnOpenSecondWindowExecuted(object p) { }
         private bool CanOpenSecondWindowExecute(object p) => true;
         #endregion
 
         #region ChangeToSecondWindow
         public ICommand ChangeToSecondWindow { get; }
-        private void OnChangeToSecondWindowExecuted(object p) => Application.Current.Shutdown();
+        private void OnChangeToSecondWindowExecuted(object p) { }
         private bool CanChangeToSecondWindowExecute(object p) => true;
         #endregion
 

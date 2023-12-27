@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TwoWindowsMVVM"
              xmlns:vm="clr-namespace:TwoWindowsMVVM.ViewModels"
-             StartupUri="Views/MainWindow/MainWindow.xaml">
+             >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

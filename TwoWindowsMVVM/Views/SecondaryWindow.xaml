@@ -11,10 +11,10 @@
     <Grid>
         <DockPanel Margin="50">
             <GroupBox DockPanel.Dock="Top" Header="Сообщение первому окну">
-                <TextBox Text="{Binding Message}"/>
+                <TextBox Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
             </GroupBox>
             <UniformGrid DockPanel.Dock="Top" Rows="1">
-                <Button Margin="10,5" Content="Отправить" Command="{Binding SendMessage}"/>
+                <Button Margin="10,5" Content="Отправить" Command="{Binding SendMessage}" CommandParameter="{Binding Message}"/>
                 <Button Margin="10,5" Content="Открыть первое окно" Command="{Binding OpenMainWindow}"/>
                 <Button Margin="10,5" Content="Перейти в первое окно" Command="{Binding ChangeToMainWindow}"/>
             </UniformGrid>
