@@ -21,7 +21,8 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
             _userDialogService = userDialogService;
 
             var prjVersion = new ProjectVersion(Assembly.GetExecutingAssembly());
-            Title = $"{AppConst.Get().AppDesciption} {prjVersion.Version}";
+            //Title = $"{AppConst.Get().AppDesciption} {prjVersion.Version}";
+            Title = $"Главное окно";
 
             #region Commands
             Exit = new RelayCommand(OnExitExecuted, CanExitExecute);

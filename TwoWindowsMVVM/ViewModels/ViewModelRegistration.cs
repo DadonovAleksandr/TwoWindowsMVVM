@@ -7,6 +7,7 @@ namespace TwoWindowsMVVM.ViewModels
     {
         public static IServiceCollection RegisterViewModels(this IServiceCollection services) => services
             .AddSingleton<MainWindowViewModel>()
+            .AddTransient<SecondaryWindowViewModel>()
             ;
 
     }
