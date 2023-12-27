@@ -11,9 +11,16 @@ namespace TwoWindowsMVVM.Infrastructure.Commands.Base
             remove => CommandManager.RequerySuggested -= value;
         }
 
-        public abstract bool CanExecute(object parameter);
+        bool ICommand.CanExecute(object? parameter) => CanExecute(parameter);
+        void ICommand.Execute(object? parameter)
+        {
+            if(((ICommand)this).CanExecute(parameter))
+                Execute(parameter);
+        }
 
-        public abstract void Execute(object parameter);
+        protected virtual bool CanExecute(object parameter) => true;
+
+        protected abstract void Execute(object parameter);
 
     }
 }

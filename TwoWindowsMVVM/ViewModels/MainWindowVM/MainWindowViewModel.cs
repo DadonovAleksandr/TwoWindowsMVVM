@@ -1,8 +1,12 @@
 ﻿using ProjectVersionInfo;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using TwoWindowsMVVM.Infrastructure.Commands;
+using TwoWindowsMVVM.Model;
 using TwoWindowsMVVM.Model.AppSettings.AppConfig;
 using TwoWindowsMVVM.Service.UserDialogService;
 using TwoWindowsMVVM.ViewModels.Base;
@@ -26,6 +30,9 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 
             #region Commands
             Exit = new RelayCommand(OnExitExecuted, CanExitExecute);
+            SendMessage = new RelayCommand(OnSendMessageExecuted, p => p is string { Length: > 0});
+            OpenSecondWindow = new RelayCommand(OnOpenSecondWindowExecuted, CanOpenSecondWindowExecute);
+            ChangeToSecondWindow = new RelayCommand(OnChangeToSecondWindowExecuted, CanChangeToSecondWindowExecute);
             #endregion
 
         }
@@ -46,6 +53,23 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
         private bool CanExitExecute(object p) => true;
         #endregion
 
+        #region SendMessage
+        public ICommand SendMessage { get; }
+        private void OnSendMessageExecuted(object p) => Application.Current.Shutdown();
+        #endregion
+
+        #region  OpenSecondWindow
+        public ICommand OpenSecondWindow { get; }
+        private void OnOpenSecondWindowExecuted(object p) => Application.Current.Shutdown();
+        private bool CanOpenSecondWindowExecute(object p) => true;
+        #endregion
+
+        #region ChangeToSecondWindow
+        public ICommand ChangeToSecondWindow { get; }
+        private void OnChangeToSecondWindowExecuted(object p) => Application.Current.Shutdown();
+        private bool CanChangeToSecondWindowExecute(object p) => true;
+        #endregion
+
         #endregion
 
         /* ------------------------------------------------------------------------------------------------------------ */
@@ -54,6 +78,11 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
         /// Заголовок окна
         /// </summary>
         public string Title { get => Get<string>(); set => Set(value); }
+
+        public string Message { get => Get<string>(); set => Set(value); }
+
+        private readonly ObservableCollection<TextMessageModel> _Messages = new();
+        public IEnumerable<TextMessageModel> Messages => _Messages;
 
     }
 }
