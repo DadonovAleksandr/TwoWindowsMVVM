@@ -10,6 +10,7 @@ using System.Windows;
 using TwoWindowsMVVM.Model;
 using TwoWindowsMVVM.Model.AppSettings.AppConfig;
 using TwoWindowsMVVM.Service;
+using TwoWindowsMVVM.Service.UserDialogService;
 using TwoWindowsMVVM.ViewModels;
 
 namespace TwoWindowsMVVM
@@ -38,7 +39,7 @@ namespace TwoWindowsMVVM
 
             await host.StartAsync().ConfigureAwait(false);
 
-            Service.GetRequiredService<MainWindow>().Show();
+            Service.GetRequiredService<IUserDialogService>().OpenMainWindow();
         }
 
         protected override async void OnExit(ExitEventArgs e)
