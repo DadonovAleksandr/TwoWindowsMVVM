@@ -8,7 +8,7 @@ namespace TwoWindowsMVVM.ViewModels
     {
         public static IServiceCollection RegisterViewModels(this IServiceCollection services) => services
             .AddSingleton<MainWindowViewModel>()
-            .AddTransient<SecondaryWindowViewModel>()
+            .AddScoped<SecondaryWindowViewModel>()
             .AddTransient(s =>
                 {
                     var model = s.GetRequiredService<MainWindowViewModel>();
@@ -18,9 +18,11 @@ namespace TwoWindowsMVVM.ViewModels
                 })
             .AddTransient(s =>
                 {
-                    var model = s.GetRequiredService<SecondaryWindowViewModel>();
+                    var scope = s.CreateScope();
+                    var model = scope.ServiceProvider.GetRequiredService<SecondaryWindowViewModel>();
                     var window = new SecondaryWindow { DataContext = model };
                     model.DialogComplete += (sender, args) => window.Close();
+                    window.Closed += (_, _) => scope.Dispose();
                     return window;
                 })
             .AddTransient<SecondaryWindowViewModel>()
