@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TwoWindowsMVVM.Infrastructure.Commands;
 using TwoWindowsMVVM.Model;
+using TwoWindowsMVVM.Service.MessageBus;
 using TwoWindowsMVVM.Service.UserDialogService;
 using TwoWindowsMVVM.ViewModels.Base;
 
@@ -12,11 +13,13 @@ namespace TwoWindowsMVVM.ViewModels;
 internal class SecondaryWindowViewModel : DialogViewModel
 {
     private readonly IUserDialogService _userDialogService;
+    private readonly IMessageBus _messageBus;
 
-    public SecondaryWindowViewModel(IUserDialogService userDialogService)
+    public SecondaryWindowViewModel(IUserDialogService userDialogService, IMessageBus messageBus)
     {
         Title = $"Вторичное окно";
         _userDialogService = userDialogService;
+        _messageBus = messageBus;
 
         #region Commands
         SendMessage = new RelayCommand(OnSendMessageExecuted, p => p is string { Length: > 0 });

@@ -9,8 +9,8 @@ using System.Windows.Input;
 using TwoWindowsMVVM.Infrastructure.Commands;
 using TwoWindowsMVVM.Model;
 using TwoWindowsMVVM.Model.AppSettings.AppConfig;
+using TwoWindowsMVVM.Service.MessageBus;
 using TwoWindowsMVVM.Service.UserDialogService;
-using TwoWindowsMVVM.ViewModels.Base;
 
 namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 {
@@ -18,13 +18,15 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
     {
         private readonly IAppConfig _appConfig;
         private readonly IUserDialogService _userDialogService;
+        private readonly IMessageBus _messageBus;
+
         /* ------------------------------------------------------------------------------------------------------------ */
-        public MainWindowViewModel(IUserDialogService userDialogService)
+        public MainWindowViewModel(IUserDialogService userDialogService, IMessageBus messageBus)
         {
             _log.Debug($"Вызов конструктора {GetType().Name}");
             _appConfig = AppConfig.GetConfigFromDefaultPath();
             _userDialogService = userDialogService;
-
+            _messageBus = messageBus;
             var prjVersion = new ProjectVersion(Assembly.GetExecutingAssembly());
             //Title = $"{AppConst.Get().AppDesciption} {prjVersion.Version}";
             Title = $"Главное окно";

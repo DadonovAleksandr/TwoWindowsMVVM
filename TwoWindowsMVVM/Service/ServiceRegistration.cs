@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TwoWindowsMVVM.Service.MessageBus;
 using TwoWindowsMVVM.Service.UserDialogService;
 
 namespace TwoWindowsMVVM.Service
@@ -7,6 +8,7 @@ namespace TwoWindowsMVVM.Service
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services) => services
             .AddTransient<IUserDialogService, WindowsUserDialogService>()
+            .AddSingleton<IMessageBus, MessageBusService>()
             ;
 
     }
