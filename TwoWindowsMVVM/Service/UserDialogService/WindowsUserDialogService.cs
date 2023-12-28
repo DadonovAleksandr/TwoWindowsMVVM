@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -8,6 +9,43 @@ namespace TwoWindowsMVVM.Service.UserDialogService
 {
     internal class WindowsUserDialogService : IUserDialogService
     {
+        private readonly IServiceProvider _services;
+        public WindowsUserDialogService(IServiceProvider services)
+        {
+            _services = services;
+        }
+
+        private MainWindow? _mainWindow;
+        public void OpenMainWindow()
+        {
+            if(_mainWindow is { } window)
+            {
+                window.Show();
+                return;
+            }
+
+            window = _services.GetRequiredService<MainWindow>();
+            window.Closed += (_, _) => _mainWindow = null;
+            _mainWindow = window;
+            window.Show();
+        }
+
+        private SecondaryWindow? _secondaryWindow;
+        public void SecondaryMainWindow()
+        {
+            if (_secondaryWindow is { } window)
+            {
+                window.Show();
+                return;
+            }
+
+            window = _services.GetRequiredService<SecondaryWindow>();
+            window.Closed += (_, _) => _secondaryWindow = null;
+            _secondaryWindow = window;
+            window.Show();
+        }
+
+
         private static Window ActiveWindow => Application.Current.Windows
                 .OfType<Window>()
                 .FirstOrDefault(w => w.IsActive);
@@ -45,5 +83,7 @@ namespace TwoWindowsMVVM.Service.UserDialogService
             progressWindow.Show();
             return (progressWindow.ProgressInformer, progressWindow.StatusInformer, progressWindow.Cancellation, progressWindow.Close);
         }
+
+        
     }
 }

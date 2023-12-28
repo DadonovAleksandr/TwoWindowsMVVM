@@ -11,5 +11,9 @@ namespace TwoWindowsMVVM.Service.UserDialogService
         bool Confirm(string message, bool exclamation = false);
 
         (IProgress<double> Progress, IProgress<string> Status, CancellationToken Cancel, Action Close) ShowProgress(string title);
+
+
+        void OpenMainWindow();
+        void SecondaryMainWindow();
     }
 }

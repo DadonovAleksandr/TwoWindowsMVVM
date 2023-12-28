@@ -3,21 +3,25 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TwoWindowsMVVM.Infrastructure.Commands;
 using TwoWindowsMVVM.Model;
+using TwoWindowsMVVM.Service.UserDialogService;
 using TwoWindowsMVVM.ViewModels.Base;
 
 namespace TwoWindowsMVVM.ViewModels;
 
 internal class SecondaryWindowViewModel : BaseViewModel
 {
+    private readonly IUserDialogService _userDialogService;
 
-    public SecondaryWindowViewModel()
+    public SecondaryWindowViewModel(IUserDialogService userDialogService)
     {
         Title = $"Вторичное окно";
+        _userDialogService = userDialogService;
 
         #region Commands
         SendMessage = new RelayCommand(OnSendMessageExecuted, p => p is string { Length: > 0 });
         OpenMainWindow = new RelayCommand(OnOpenMainWindowExecuted, CanOpenMainWindowExecute);
         ChangeToMainWindow = new RelayCommand(OnChangeToMainWindowExecuted, CanChangeToMainWindowExecute);
+        
         #endregion
     }
 
@@ -54,5 +58,7 @@ internal class SecondaryWindowViewModel : BaseViewModel
     public string Message { get => Get<string>(); set => Set(value); }
 
     private readonly ObservableCollection<TextMessageModel> _Messages = new();
+    
+
     public IEnumerable<TextMessageModel> Messages => _Messages;
 }
