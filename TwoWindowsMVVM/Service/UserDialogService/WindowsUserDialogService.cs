@@ -31,7 +31,7 @@ namespace TwoWindowsMVVM.Service.UserDialogService
         }
 
         private SecondaryWindow? _secondaryWindow;
-        public void SecondaryMainWindow()
+        public void OpenSecondaryWindow()
         {
             if (_secondaryWindow is { } window)
             {

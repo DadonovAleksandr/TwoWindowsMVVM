@@ -60,13 +60,19 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 
         #region  OpenSecondWindow
         public ICommand OpenSecondWindow { get; }
-        private void OnOpenSecondWindowExecuted(object p) { }
+        private void OnOpenSecondWindowExecuted(object p) 
+        {
+            _userDialogService.OpenSecondaryWindow();
+        }
         private bool CanOpenSecondWindowExecute(object p) => true;
         #endregion
 
         #region ChangeToSecondWindow
         public ICommand ChangeToSecondWindow { get; }
-        private void OnChangeToSecondWindowExecuted(object p) { }
+        private void OnChangeToSecondWindowExecuted(object p) 
+        {
+            _userDialogService.OpenSecondaryWindow();
+        }
         private bool CanChangeToSecondWindowExecute(object p) => true;
         #endregion
 

@@ -35,13 +35,19 @@ internal class SecondaryWindowViewModel : BaseViewModel
 
     #region  OpenSecondWindow
     public ICommand OpenMainWindow { get; }
-    private void OnOpenMainWindowExecuted(object p) { }
+    private void OnOpenMainWindowExecuted(object p) 
+    {
+        _userDialogService.OpenMainWindow();
+    }
     private bool CanOpenMainWindowExecute(object p) => true;
     #endregion
 
     #region ChangeToSecondWindow
     public ICommand ChangeToMainWindow { get; }
-    private void OnChangeToMainWindowExecuted(object p) { }
+    private void OnChangeToMainWindowExecuted(object p) 
+    {
+        _userDialogService.OpenMainWindow();
+    }
     private bool CanChangeToMainWindowExecute(object p) => true;
     #endregion
 

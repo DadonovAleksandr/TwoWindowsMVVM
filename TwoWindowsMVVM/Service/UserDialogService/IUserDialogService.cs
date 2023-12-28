@@ -14,6 +14,6 @@ namespace TwoWindowsMVVM.Service.UserDialogService
 
 
         void OpenMainWindow();
-        void SecondaryMainWindow();
+        void OpenSecondaryWindow();
     }
 }
