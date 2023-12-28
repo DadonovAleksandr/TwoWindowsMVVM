@@ -14,11 +14,13 @@ using TwoWindowsMVVM.Service.UserDialogService;
 
 namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 {
-    internal class MainWindowViewModel : DialogViewModel
+    internal class MainWindowViewModel : DialogViewModel, IDisposable
     {
         private readonly IAppConfig _appConfig;
         private readonly IUserDialogService _userDialogService;
         private readonly IMessageBus _messageBus;
+        private readonly IDisposable _subscription;
+
 
         /* ------------------------------------------------------------------------------------------------------------ */
         public MainWindowViewModel(IUserDialogService userDialogService, IMessageBus messageBus)
@@ -27,6 +29,7 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
             _appConfig = AppConfig.GetConfigFromDefaultPath();
             _userDialogService = userDialogService;
             _messageBus = messageBus;
+            _subscription = messageBus.RegisterHandler<Message>(OnReceaveMessage);
             var prjVersion = new ProjectVersion(Assembly.GetExecutingAssembly());
             //Title = $"{AppConst.Get().AppDesciption} {prjVersion.Version}";
             Title = $"Главное окно";
@@ -40,6 +43,13 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 
         }
 
+
+        private void OnReceaveMessage(Message message)
+        {
+            _Messages.Add(new TextMessageModel(message.text));
+        }
+
+
         /// <summary>
         /// Действия выполняемые при закрытии основной формы
         /// </summary>
@@ -47,6 +57,11 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
         {
             //_projectConfigurationRepository?.Save();
         }
+
+
+        public void Dispose() => _subscription.Dispose();
+
+
         /* ------------------------------------------------------------------------------------------------------------ */
         #region Commands
 
@@ -58,7 +73,10 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 
         #region SendMessage
         public ICommand SendMessage { get; }
-        private void OnSendMessageExecuted(object p) { }
+        private void OnSendMessageExecuted(object p) 
+        {
+            _messageBus.Send(new Message((string)p!));
+        }
         #endregion
 
         #region  OpenSecondWindow
@@ -78,6 +96,8 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
             OnDialogComplete(EventArgs.Empty);
         }
         private bool CanChangeToSecondWindowExecute(object p) => true;
+
+        
         #endregion
 
         #endregion

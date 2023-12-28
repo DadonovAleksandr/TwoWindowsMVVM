@@ -14,12 +14,14 @@ internal class SecondaryWindowViewModel : DialogViewModel
 {
     private readonly IUserDialogService _userDialogService;
     private readonly IMessageBus _messageBus;
+    private readonly IDisposable _subscription;
 
     public SecondaryWindowViewModel(IUserDialogService userDialogService, IMessageBus messageBus)
     {
         Title = $"Вторичное окно";
         _userDialogService = userDialogService;
         _messageBus = messageBus;
+        _subscription = messageBus.RegisterHandler<Message>(OnReceaveMessage);
 
         #region Commands
         SendMessage = new RelayCommand(OnSendMessageExecuted, p => p is string { Length: > 0 });
@@ -29,12 +31,22 @@ internal class SecondaryWindowViewModel : DialogViewModel
         #endregion
     }
 
+    private void OnReceaveMessage(Message message)
+    {
+        _Messages.Add(new TextMessageModel(message.text));
+    }
+
+    public void Dispose() => _subscription.Dispose();
+
     /* ------------------------------------------------------------------------------------------------------------ */
     #region Commands
 
     #region SendMessage
     public ICommand SendMessage { get; }
-    private void OnSendMessageExecuted(object p) { }
+    private void OnSendMessageExecuted(object p) 
+    {
+        _messageBus.Send(new Message((string)p!));
+    }
     #endregion
 
     #region  OpenSecondWindow
