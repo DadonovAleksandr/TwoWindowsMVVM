@@ -10,7 +10,7 @@ using TwoWindowsMVVM.ViewModels.Base;
 
 namespace TwoWindowsMVVM.ViewModels;
 
-internal class SecondaryWindowViewModel : DialogViewModel
+internal class SecondaryWindowViewModel : DialogViewModel, IDisposable
 {
     private readonly IUserDialogService _userDialogService;
     private readonly IMessageBus _messageBus;

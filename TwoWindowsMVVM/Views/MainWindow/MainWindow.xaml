@@ -28,7 +28,7 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="{Binding Time, StringFormat=HH:mm:ss.fff, Mode=OneTime}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Text}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Text}"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
