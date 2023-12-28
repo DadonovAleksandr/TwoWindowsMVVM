@@ -13,14 +13,16 @@ namespace TwoWindowsMVVM.ViewModels
                 {
                     var model = s.GetRequiredService<MainWindowViewModel>();
                     var window = new MainWindow { DataContext = model };
+                    model.DialogComplete += (sender, args) => window.Close();
                     return window;
                 })
             .AddTransient(s =>
-            {
-                var model = s.GetRequiredService<SecondaryWindowViewModel>();
-                var window = new SecondaryWindow { DataContext = model };
-                return window;
-            })
+                {
+                    var model = s.GetRequiredService<SecondaryWindowViewModel>();
+                    var window = new SecondaryWindow { DataContext = model };
+                    model.DialogComplete += (sender, args) => window.Close();
+                    return window;
+                })
             .AddTransient<SecondaryWindowViewModel>()
 
             ;

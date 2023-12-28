@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TwoWindowsMVVM.Infrastructure.Commands;
@@ -8,7 +9,7 @@ using TwoWindowsMVVM.ViewModels.Base;
 
 namespace TwoWindowsMVVM.ViewModels;
 
-internal class SecondaryWindowViewModel : BaseViewModel
+internal class SecondaryWindowViewModel : DialogViewModel
 {
     private readonly IUserDialogService _userDialogService;
 
@@ -47,6 +48,7 @@ internal class SecondaryWindowViewModel : BaseViewModel
     private void OnChangeToMainWindowExecuted(object p) 
     {
         _userDialogService.OpenMainWindow();
+        OnDialogComplete(EventArgs.Empty);
     }
     private bool CanChangeToMainWindowExecute(object p) => true;
     #endregion

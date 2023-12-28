@@ -1,4 +1,5 @@
 ﻿using ProjectVersionInfo;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ using TwoWindowsMVVM.ViewModels.Base;
 
 namespace TwoWindowsMVVM.ViewModels.MainWindowVm
 {
-    internal class MainWindowViewModel : BaseViewModel
+    internal class MainWindowViewModel : DialogViewModel
     {
         private readonly IAppConfig _appConfig;
         private readonly IUserDialogService _userDialogService;
@@ -72,6 +73,7 @@ namespace TwoWindowsMVVM.ViewModels.MainWindowVm
         private void OnChangeToSecondWindowExecuted(object p) 
         {
             _userDialogService.OpenSecondaryWindow();
+            OnDialogComplete(EventArgs.Empty);
         }
         private bool CanChangeToSecondWindowExecute(object p) => true;
         #endregion
